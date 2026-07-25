@@ -76,6 +76,17 @@ export default function IssueModal({ issue, onClose, onUpvoted }) {
             <p className="text-gray-700 text-sm leading-relaxed">{issue.summary}</p>
           </div>
 
+          {/* Photo */}
+          {issue.image_url && (
+            <div className="rounded-xl overflow-hidden border bg-gray-100">
+              <img
+                src={issue.image_url}
+                alt={`Reported ${category} issue`}
+                className="w-full max-h-80 object-cover"
+              />
+            </div>
+          )}
+        
           {/* Metadata grid */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-start gap-2">
