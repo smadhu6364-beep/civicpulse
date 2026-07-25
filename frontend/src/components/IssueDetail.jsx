@@ -125,6 +125,17 @@ export default function IssueDetail() {
 
       <h1 className="text-2xl font-bold text-gray-900 capitalize mb-6">{category}</h1>
 
+      {/* Photo */}
+      {issue.image_url && (
+        <div className="rounded-2xl overflow-hidden border shadow-sm mb-6 bg-gray-100">
+          <img
+            src={issue.image_url}
+            alt={`Reported ${category} issue`}
+            className="w-full max-h-96 object-cover"
+          />
+        </div>
+      )}
+    
       {/* AI Summary */}
       <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100 mb-6">
         <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">
