@@ -3,8 +3,11 @@ import os
 import json
 import base64
 import asyncio
+import logging
 from datetime import date
 from models import IssueAnalysis
+
+logger = logging.getLogger("civicpulse.gemini")
 
 CATEGORIES = [
     "pothole", "broken_streetlight", "garbage", "water_leakage",
@@ -169,7 +172,8 @@ async def analyze_image(
         data = await asyncio.to_thread(
             _analyze_image_sync, image_data, description, location_address
         )
-    except Exception as e:
+    except Exception:
+        logger.exception("Gemini image analysis failed — falling back to defaults")
         data = {}
 
     category = data.get("category", "other")
@@ -194,6 +198,7 @@ async def analyze_image(
             description,
         )
     except Exception:
+        logger.exception("Gemini complaint-letter generation failed — using template fallback")
         readable = _readable_category(category)
         art = _article(readable)
         impact = CATEGORY_IMPACTS.get(category, CATEGORY_IMPACTS["other"])
