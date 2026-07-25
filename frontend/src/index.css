@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.leaflet-container {
+  font-family: inherit;
+  z-index: 0;
+}
+
+/* Severity pin styles */
+.pin-high {
+  background-color: #DC2626;
+  border: 2px solid #991B1B;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  width: 24px;
+  height: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+
+.pin-medium {
+  background-color: #D97706;
+  border: 2px solid #92400E;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  width: 24px;
+  height: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+
+.pin-low {
+  background-color: #15803D;
+  border: 2px solid #14532D;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  width: 24px;
+  height: 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+
+/* Smooth scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 transparent;
+}
