@@ -141,13 +141,13 @@ The Officer In Charge
 
 Dear Sir/Madam,
 
-[Paragraph 1 — Introduction]
+[Paragraph 1: Introduction]
 Write as a concerned citizen reporting {art} {readable} issue at {location_text}. State that the issue has been assessed as {severity.upper()} severity and requires urgent attention from the {authority}.
 
-[Paragraph 2 — Issue description and impact]
+[Paragraph 2: Issue description and impact]
 Describe the issue in specific detail, referencing both the reporter's description and the AI analysis summary above. Include this sentence (adapted naturally into the paragraph): "This {readable} {impact}." Explain the direct effect on residents, commuters, or the public depending on the issue type.
 
-[Paragraph 3 — Formal request and escalation notice]
+[Paragraph 3: Formal request and escalation notice]
 Formally request that the {authority} depute a team to inspect the site and carry out the necessary rectification works {timeline}. State that if no action is taken within the stipulated period, the matter will be escalated to the relevant Commissioner or higher municipal authority.
 
 Yours sincerely,
@@ -155,9 +155,9 @@ A Concerned Citizen
 
 ---
 Rules:
-- Use correct English grammar and articles throughout (e.g. "a pothole", "a broken streetlight", "a civic issue" — never "a other issue")
+- Use correct English grammar and articles throughout (e.g. "a pothole", "a broken streetlight", "a civic issue", never "a other issue")
 - Do NOT use any placeholder text such as [Name], [Date], [Location], or [Authority]
-- Do NOT include square brackets in the final output — replace the paragraph placeholders above with real prose
+- Do NOT include square brackets in the final output; replace the paragraph placeholders above with real prose
 - Write in formal British English
 - Output only the letter text, nothing else"""
 
@@ -173,7 +173,7 @@ async def analyze_image(
             _analyze_image_sync, image_data, description, location_address
         )
     except Exception:
-        logger.exception("Gemini image analysis failed — falling back to defaults")
+        logger.exception("Gemini image analysis failed, falling back to defaults")
         data = {}
 
     category = data.get("category", "other")
@@ -198,7 +198,7 @@ async def analyze_image(
             description,
         )
     except Exception:
-        logger.exception("Gemini complaint-letter generation failed — using template fallback")
+        logger.exception("Gemini complaint-letter generation failed, using template fallback")
         readable = _readable_category(category)
         art = _article(readable)
         impact = CATEGORY_IMPACTS.get(category, CATEGORY_IMPACTS["other"])
