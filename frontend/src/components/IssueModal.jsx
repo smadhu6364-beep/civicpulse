@@ -70,12 +70,6 @@ export default function IssueModal({ issue, onClose, onUpvoted }) {
 
         {/* Body */}
         <div className="p-6 space-y-5">
-          {/* AI Summary */}
-          <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
-            <p className="text-sm font-semibold text-blue-700 mb-1">AI Analysis</p>
-            <p className="text-gray-700 text-sm leading-relaxed">{issue.summary}</p>
-          </div>
-
           {/* Photo */}
           {issue.image_url && (
             <div className="rounded-xl overflow-hidden border bg-gray-100">
@@ -86,7 +80,13 @@ export default function IssueModal({ issue, onClose, onUpvoted }) {
               />
             </div>
           )}
-        
+
+          {/* AI Summary */}
+          <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
+            <p className="text-sm font-semibold text-blue-700 mb-1">AI Analysis</p>
+            <p className="text-gray-700 text-sm leading-relaxed">{issue.summary}</p>
+          </div>
+
           {/* Metadata grid */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-start gap-2">
