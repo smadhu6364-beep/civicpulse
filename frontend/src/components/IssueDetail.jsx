@@ -135,7 +135,7 @@ export default function IssueDetail() {
           />
         </div>
       )}
-    
+
       {/* AI Summary */}
       <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100 mb-6">
         <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">
@@ -157,7 +157,7 @@ export default function IssueDetail() {
           <Building2 size={16} className="text-gray-400 mt-0.5 shrink-0" />
           <div>
             <p className="text-xs text-gray-500 font-medium">Responsible Authority</p>
-            <p className="text-sm text-gray-800">{issue.authority || "—"}</p>
+            <p className="text-sm text-gray-800">{issue.authority || "N/A"}</p>
           </div>
         </div>
         {issue.location?.address && (

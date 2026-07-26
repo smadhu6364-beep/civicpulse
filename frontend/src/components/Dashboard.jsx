@@ -50,7 +50,7 @@ function IssueRow({ issue, onClick }) {
       onClick={() => onClick(issue)}
     >
       <td className="px-4 py-3 text-sm text-gray-800 capitalize">
-        {issue.category?.replace(/_/g, " ") || "—"}
+        {issue.category?.replace(/_/g, " ") || "N/A"}
       </td>
       <td className="px-4 py-3 text-sm text-gray-600 max-w-xs truncate">
         {issue.summary || issue.description}

@@ -52,9 +52,20 @@ export default function IssueForm() {
       setErrorMsg("Image must be under 10 MB");
       return;
     }
+    setPreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return URL.createObjectURL(file);
+    });
     setImage(file);
-    setPreview(URL.createObjectURL(file));
     setErrorMsg("");
+  }
+
+  function clearFile() {
+    setPreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
+    setImage(null);
   }
 
   function handleDrop(e) {
@@ -129,7 +140,7 @@ export default function IssueForm() {
 
         <div className="flex gap-3 justify-center">
           <button
-            onClick={() => { setStatus(null); setResult(null); setImage(null); setPreview(null); setPosition(null); setForm({ description: "", reporter_name: "", reporter_email: "", address: "" }); }}
+            onClick={() => { clearFile(); setStatus(null); setResult(null); setPosition(null); setForm({ description: "", reporter_name: "", reporter_email: "", address: "" }); }}
             className="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
           >
             Report Another
@@ -165,7 +176,7 @@ export default function IssueForm() {
               <img src={preview} alt="Preview" className="w-full h-full object-cover" />
               <button
                 type="button"
-                onClick={() => { setImage(null); setPreview(null); }}
+                onClick={clearFile}
                 className="absolute top-2 right-2 bg-white/90 backdrop-blur rounded-full p-1.5 hover:bg-white shadow text-gray-700 text-xs font-medium"
               >
                 Change
@@ -183,7 +194,7 @@ export default function IssueForm() {
             >
               <Upload size={32} className="mx-auto text-gray-400 mb-2" />
               <p className="text-sm text-gray-600 font-medium">Drop a photo here or click to browse</p>
-              <p className="text-xs text-gray-400 mt-1">JPEG, PNG, WebP — max 10 MB</p>
+              <p className="text-xs text-gray-400 mt-1">JPEG, PNG, WebP (max 10 MB)</p>
             </div>
           )}
           <input
@@ -205,7 +216,7 @@ export default function IssueForm() {
             rows={3}
             value={form.description}
             onChange={handleField}
-            placeholder="Describe the issue briefly — e.g. 'Large pothole near the intersection causing traffic problems'"
+            placeholder="Describe the issue briefly, e.g. 'Large pothole near the intersection causing traffic problems'"
             className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           />
         </div>
