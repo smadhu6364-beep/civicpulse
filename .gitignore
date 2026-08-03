@@ -19,7 +19,6 @@ dist/
 build/
 
 # Local tool config
-.claude/
 
 # OS
 .DS_Store
