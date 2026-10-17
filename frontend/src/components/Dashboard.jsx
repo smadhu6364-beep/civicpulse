@@ -31,7 +31,7 @@ function StatCard({ icon: Icon, label, value, sub, color = "blue" }) {
     red: "bg-red-500 text-white",
   };
   return (
-    <div className="bg-white rounded-2xl border p-5 shadow-sm">
+    <div className="bg-white rounded-2xl border p-5 shadow-xs">
       <div className={`w-10 h-10 rounded-xl ${colors[color]} flex items-center justify-center mb-3`}>
         <Icon size={20} />
       </div>
@@ -147,7 +147,7 @@ export default function Dashboard() {
       {/* Charts row */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Top categories */}
-        <div className="bg-white rounded-2xl border shadow-sm p-6">
+        <div className="bg-white rounded-2xl border shadow-xs p-6">
           <h2 className="text-base font-bold text-gray-800 mb-4">Top Issue Categories</h2>
           {stats?.top_categories?.length ? (
             <div className="space-y-3">
@@ -174,7 +174,7 @@ export default function Dashboard() {
         </div>
 
         {/* Severity breakdown */}
-        <div className="bg-white rounded-2xl border shadow-sm p-6">
+        <div className="bg-white rounded-2xl border shadow-xs p-6">
           <h2 className="text-base font-bold text-gray-800 mb-4">Severity Breakdown</h2>
           <div className="space-y-4">
             {Object.entries(stats?.severity_breakdown || {}).map(([sev, count]) => {
@@ -201,7 +201,7 @@ export default function Dashboard() {
       </div>
 
       {/* Recent issues table */}
-      <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border shadow-xs overflow-hidden">
         <div className="px-6 py-4 border-b">
           <h2 className="text-base font-bold text-gray-800">Recent Reports</h2>
         </div>

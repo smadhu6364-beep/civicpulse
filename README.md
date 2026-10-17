@@ -1,5 +1,18 @@
 # CivicPulse
 
+**Snap a photo of a pothole, get a categorised report and a ready-to-send complaint letter.**
+
+[![CI](https://github.com/smadhu6364-beep/civicpulse/actions/workflows/ci.yml/badge.svg)](https://github.com/smadhu6364-beep/civicpulse/actions/workflows/ci.yml)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![Gemini](https://img.shields.io/badge/Google_Gemini-8E75B2?logo=googlegemini&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+![Report form](docs/screenshot-report.png)
+
 Potholes, broken streetlights, illegal dumping: the small stuff that makes a neighbourhood feel neglected rarely gets reported, because reporting it is a hassle. CivicPulse turns a single photo into a categorised, severity-scored, ready-to-send complaint letter, then drops a pin on a live community map so everyone can see what has been flagged and back it with an upvote.
 
 ## How It Works
@@ -24,9 +37,9 @@ Potholes, broken streetlights, illegal dumping: the small stuff that makes a nei
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 18 + Vite + Tailwind CSS + Leaflet.js |
-| Backend | Python FastAPI |
-| AI | Google Gemini 1.5 Flash (multimodal) |
+| Frontend | React 19, Vite 8, Tailwind CSS 4, React Router 7, Leaflet (react-leaflet 5) |
+| Backend | Python, FastAPI |
+| AI | Google Gemini via the `google-genai` SDK (default model `gemini-3.8-flash`, configurable) |
 | Database | Firebase Firestore |
 | Storage | Firebase Storage |
 | Deployment | Google Cloud Run (+ Docker) |
@@ -62,6 +75,16 @@ uvicorn main:app --reload --port 8000
 The API will be available at `http://localhost:8000`.
 Interactive docs: `http://localhost:8000/docs`
 
+### Tests
+
+The backend tests stub out Gemini and Firestore, so they need no keys:
+
+```bash
+cd backend
+pip install -r requirements-dev.txt
+pytest
+```
+
 ### 3. Frontend
 
 ```bash
@@ -94,6 +117,7 @@ Frontend: `http://localhost`. Backend: `http://localhost:8000`.
 | Variable | Description |
 |---|---|
 | `GEMINI_API_KEY` | Google Gemini API key |
+| `GEMINI_MODEL` | Optional. Gemini model ID (default: `gemini-3.8-flash`) |
 | `FIREBASE_PROJECT_ID` | Firebase project ID |
 | `FIREBASE_SERVICE_ACCOUNT_PATH` | Path to service account JSON (default: `./serviceAccount.json`) |
 | `FIREBASE_SERVICE_ACCOUNT_JSON` | Service account as JSON string (for Cloud Run) |
@@ -174,6 +198,7 @@ civicpulse/
 │   ├── services/
 │   │   ├── gemini_service.py      # Gemini Vision analysis + letter generation
 │   │   └── firestore_service.py   # Firestore CRUD + Firebase Storage uploads
+│   ├── tests/                     # API tests (no keys needed)
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   └── .env.example
@@ -196,3 +221,14 @@ civicpulse/
 ├── docker-compose.yml
 └── README.md
 ```
+
+## Status and limitations
+
+- There is no hosted demo: running it needs your own Gemini API key and Firebase project.
+- If Gemini is unavailable or the key is missing, the backend still saves the report with category "other", medium severity and a template letter.
+- No user accounts or moderation; anyone can report and upvote.
+- CI runs the backend tests and the frontend build. It does not call Gemini or Firebase.
+
+## Licence
+
+MIT, see [LICENSE](LICENSE).

@@ -177,7 +177,7 @@ export default function IssueForm() {
               <button
                 type="button"
                 onClick={clearFile}
-                className="absolute top-2 right-2 bg-white/90 backdrop-blur rounded-full p-1.5 hover:bg-white shadow text-gray-700 text-xs font-medium"
+                className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full p-1.5 hover:bg-white shadow-sm text-gray-700 text-xs font-medium"
               >
                 Change
               </button>
@@ -217,7 +217,7 @@ export default function IssueForm() {
             value={form.description}
             onChange={handleField}
             placeholder="Describe the issue briefly, e.g. 'Large pothole near the intersection causing traffic problems'"
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500 resize-none"
           />
         </div>
 
@@ -270,7 +270,7 @@ export default function IssueForm() {
             value={form.address}
             onChange={handleField}
             placeholder="e.g. Near City Hall, MG Road"
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -286,7 +286,7 @@ export default function IssueForm() {
               value={form.reporter_name}
               onChange={handleField}
               placeholder="Anonymous"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -299,7 +299,7 @@ export default function IssueForm() {
               value={form.reporter_email}
               onChange={handleField}
               placeholder="for follow-up"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
