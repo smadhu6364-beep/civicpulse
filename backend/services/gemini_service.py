@@ -1,7 +1,7 @@
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import os
 import json
-import base64
 import asyncio
 import logging
 from datetime import date
@@ -58,26 +58,19 @@ def _readable_category(category: str) -> str:
     return "civic issue" if category == "other" else category.replace("_", " ")
 
 
-def _configure_genai():
+MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
+
+
+def _client() -> genai.Client:
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise ValueError("GEMINI_API_KEY environment variable not set")
-    genai.configure(api_key=api_key)
+    return genai.Client(api_key=api_key)
 
 
 def _analyze_image_sync(image_data: bytes, description: str, location_address: str) -> dict:
-    _configure_genai()
-    model = genai.GenerativeModel(
-        "gemini-1.5-flash",
-        generation_config={"response_mime_type": "application/json"},
-    )
-
-    image_part = {
-        "inline_data": {
-            "mime_type": "image/jpeg",
-            "data": base64.b64encode(image_data).decode("utf-8"),
-        }
-    }
+    client = _client()
+    image_part = types.Part.from_bytes(data=image_data, mime_type="image/jpeg")
 
     prompt = f"""Analyze this civic issue image and classify it.
 
@@ -96,7 +89,11 @@ Severity guidelines:
 - medium: moderate disruption or potential safety concern
 - high: serious hazard requiring urgent attention"""
 
-    response = model.generate_content([prompt, image_part])
+    response = client.models.generate_content(
+        model=MODEL,
+        contents=[prompt, image_part],
+        config=types.GenerateContentConfig(response_mime_type="application/json"),
+    )
     return json.loads(response.text)
 
 
@@ -108,8 +105,7 @@ def _generate_letter_sync(
     location: str,
     description: str,
 ) -> str:
-    _configure_genai()
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    client = _client()
 
     today = date.today().strftime("%d %B %Y")
     readable = _readable_category(category)
@@ -161,7 +157,7 @@ Rules:
 - Write in formal British English
 - Output only the letter text, nothing else"""
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(model=MODEL, contents=prompt)
     return response.text
 
 

@@ -153,7 +153,7 @@ export default function MapView() {
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-6 left-4 bg-white rounded-xl shadow-lg p-3 z-[999] border">
+      <div className="absolute bottom-6 left-4 bg-white rounded-xl shadow-lg p-3 z-999 border">
         <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Severity</p>
         {LEGEND.map(({ label, color }) => (
           <div key={label} className="flex items-center gap-2 mb-1 last:mb-0">

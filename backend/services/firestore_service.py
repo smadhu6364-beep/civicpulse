@@ -34,8 +34,16 @@ def _init_firebase():
     firebase_admin.initialize_app(cred, options)
 
 
-_init_firebase()
-_db = firestore.client()
+_db = None
+
+
+def _get_db():
+    """Connect to Firestore on first use, so the app (and tests) can start without credentials."""
+    global _db
+    if _db is None:
+        _init_firebase()
+        _db = firestore.client()
+    return _db
 
 
 def _now_iso() -> str:
@@ -62,6 +70,7 @@ def _upload_image_sync(image_data: bytes, content_type: str = "image/jpeg") -> O
         return None
 
     try:
+        _init_firebase()
         bucket = storage.bucket()
         ext = "jpg" if content_type == "image/jpeg" else content_type.split("/")[-1]
         blob = bucket.blob(f"issues/{uuid.uuid4().hex}.{ext}")
@@ -74,20 +83,20 @@ def _upload_image_sync(image_data: bytes, content_type: str = "image/jpeg") -> O
 
 
 def _create_issue_sync(issue_data: Dict[str, Any]) -> str:
-    ref = _db.collection("issues").document()
+    ref = _get_db().collection("issues").document()
     now = datetime.now(timezone.utc)
     ref.set({**issue_data, "created_at": now, "updated_at": now, "upvotes": 0, "status": "open"})
     return ref.id
 
 
 def _get_issue_sync(issue_id: str) -> Optional[Dict[str, Any]]:
-    doc = _db.collection("issues").document(issue_id).get()
+    doc = _get_db().collection("issues").document(issue_id).get()
     return _doc_to_dict(doc) if doc.exists else None
 
 
 def _get_all_issues_sync(limit: int = 200) -> List[Dict[str, Any]]:
     docs = (
-        _db.collection("issues")
+        _get_db().collection("issues")
         .order_by("created_at", direction=firestore.Query.DESCENDING)
         .limit(limit)
         .stream()
@@ -96,7 +105,7 @@ def _get_all_issues_sync(limit: int = 200) -> List[Dict[str, Any]]:
 
 
 def _upvote_sync(issue_id: str) -> int:
-    ref = _db.collection("issues").document(issue_id)
+    ref = _get_db().collection("issues").document(issue_id)
     ref.update({"upvotes": firestore.Increment(1), "updated_at": datetime.now(timezone.utc)})
     return ref.get().to_dict().get("upvotes", 0)
 

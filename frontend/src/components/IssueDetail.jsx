@@ -127,7 +127,7 @@ export default function IssueDetail() {
 
       {/* Photo */}
       {issue.image_url && (
-        <div className="rounded-2xl overflow-hidden border shadow-sm mb-6 bg-gray-100">
+        <div className="rounded-2xl overflow-hidden border shadow-xs mb-6 bg-gray-100">
           <img
             src={issue.image_url}
             alt={`Reported ${category} issue`}
@@ -145,7 +145,7 @@ export default function IssueDetail() {
       </div>
 
       {/* Metadata */}
-      <div className="bg-white rounded-2xl border shadow-sm p-5 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="bg-white rounded-2xl border shadow-xs p-5 mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex items-start gap-3">
           <Tag size={16} className="text-gray-400 mt-0.5 shrink-0" />
           <div>
@@ -172,7 +172,7 @@ export default function IssueDetail() {
       </div>
 
       {/* Description */}
-      <div className="bg-white rounded-2xl border shadow-sm p-5 mb-6">
+      <div className="bg-white rounded-2xl border shadow-xs p-5 mb-6">
         <p className="text-xs text-gray-500 font-medium mb-2">Reporter description</p>
         <p className="text-sm text-gray-700 leading-relaxed">{issue.description}</p>
         {issue.reporter_name && (
@@ -186,7 +186,7 @@ export default function IssueDetail() {
 
       {/* Complaint letter */}
       {issue.complaint_letter && (
-        <div className="bg-white rounded-2xl border shadow-sm overflow-hidden mb-6">
+        <div className="bg-white rounded-2xl border shadow-xs overflow-hidden mb-6">
           <button
             className="w-full flex items-center justify-between px-5 py-4 bg-gray-50 hover:bg-gray-100 transition-colors text-sm font-medium text-gray-700"
             onClick={() => setLetterOpen(!letterOpen)}
@@ -211,7 +211,7 @@ export default function IssueDetail() {
       )}
 
       {/* Upvote */}
-      <div className="bg-white rounded-2xl border shadow-sm p-5 flex items-center justify-between">
+      <div className="bg-white rounded-2xl border shadow-xs p-5 flex items-center justify-between">
         <p className="text-sm text-gray-500">
           <span className="font-semibold text-gray-900 text-lg">{upvotes}</span>{" "}
           community {upvotes === 1 ? "verification" : "verifications"}
